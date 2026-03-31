@@ -1,0 +1,32 @@
+services:
+  northwind:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    container_name: mssql-northwind
+    restart: unless-stopped
+    environment:
+      MSSQL_SA_PASSWORD: "Password1"
+      ACCEPT_EULA: "Y"
+    ports: 
+      - 1433:1433
+    volumes: 
+      - ./NorthwindDB:/NorthwindDB
+    entrypoint: ["/bin/bash", "/NorthwindDB/init-db.sh"]
+  
+  northwind-mcp:
+    build: 
+      context: ./NorthwindMCP
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports: 
+      - 7071:7071
+    environment:
+      ConnectionStrings__Northwind: "Data Source=northwind,1433;Initial Catalog=Northwind;User ID=sa;Password=Password1;Trust Server Certificate=True"
+      NetworkBinding: "http://0.0.0.0:7071"
+  
+  kobolcpp-northwind: 
+    image: koboldai/koboldcpp:latest
+    restart: unless-stopped
+    ports: 
+      - 7072:5001
+    environment:
+      KCPP_ARGS: --model https://huggingface.co/unsloth/gemma-3-4b-it-GGUF/resolve/main/gemma-3-4b-it-Q4_K_S.gguf?download=true --threads 8 --gpulayers 0 --contextsize 8192 --host 0.0.0.0
