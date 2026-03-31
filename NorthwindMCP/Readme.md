@@ -11,8 +11,7 @@ use docker-compose up -d to start the docker file
 **Notes**
 
 * had to add cors policy to allow all to get it run
-* had problems downloading the model from huggingface via docker environment variable. Downloaded the model and added it to folder and called via mounts
-* I do not have a gpu on this dev computer so the gpu and threads will probably need to change with the computer
+* do not have a gpu on this dev computer so the gpu and threads will probably need to change with the computer
 * TODO: Create MCPConfig.json
 
 ### Testing MCP Server without AI
@@ -32,8 +31,6 @@ Configuration
 This should connect to the MCP server and be able to list all the tools
 
 ### Connection AI to MCP Server
-
-
 
 **Connection steps**
 
