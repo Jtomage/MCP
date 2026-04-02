@@ -316,6 +316,16 @@ paket-files/
 __pycache__/
 *.pyc
 
+# Python Bytecode
+*.py[cod]
+*$py.class
+
+# Python Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
 # Cake - Uncomment if you are using it
 # tools/**
 # !tools/packages.config
